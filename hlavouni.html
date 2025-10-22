@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Představitelé a funkcionáři</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        #quiz-container {
+            background: white;
+            padding: 25px 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 800px;
+            text-align: center;
+        }
+
+        img {
+            width: 250px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .answer-summary {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .small-img {
+            width: 250px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="quiz-container">
+        <h2 id="question-number"></h2>
+        <img id="question-image" src="" alt="foto">
+        <p id="question-text">Loading question...</p>
+
+        <select id="dropdown">
+            <option value="">hodnost</option>
+        </select>
+        <input type="text" id="text-answer" placeholder="příjmení">
+
+        <div style="margin-top: 15px;">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Předchozí</button>
+            <button id="next-btn" onclick="nextQuestion()">Další</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const dropdownOptions = ["armádní generál", "generálporučík", "generálmajor", "brigádní generál", "plukovník gšt.", "podplukovník", "štábní praporčík", "bez hodnosti"];
+
+        let questions = [
+            { image: 'foto (1).JPEG', text: "Velitel VeV-VA", correctSelect: "brigádní generál", correctText: "Rebilas" },
+            { image: 'foto (2).JPEG', text: "Zástupce velitele VeV-VA", correctSelect: "plukovník gšt.", correctText: "Havel" },
+            { image: 'foto (3).JPEG', text: "Náčelník Štábu VeV-VA", correctSelect: "plukovník gšt.", correctText: "Němčanský" },
+            { image: 'foto (4).JPEG', text: "ZNŠ Ops VeV-VA", correctSelect: "podplukovník", correctText: "Barák" },
+            { image: 'foto (5).JPEG', text: "ZNŠ Sup VeV-VA", correctSelect: "podplukovník", correctText: "Zajíček" },
+            { image: 'foto (6).JPEG', text: "Vrchní praporčík VeV-VA", correctSelect: "štábní praporčík", correctText: "Vajdečka" },
+            { image: 'foto (7).JPEG', text: "Ministryně obrany ČR", correctSelect: "bez hodnosti", correctText: "Černochová" },
+            { image: 'foto (8).JPEG', text: "NGŠ", correctSelect: "armádní generál", correctText: "Řehka" },
+            { image: 'foto (9).JPEG', text: "1. ZNGŠ", correctSelect: "generálporučík", correctText: "Hlaváč" },
+            { image: 'foto (10).JPEG', text: "ZNGŠ-Náčelník Štábu", correctSelect: "generálmajor", correctText: "Lipka" },
+            { image: 'foto (11).JPEG', text: "ZNGŠ-Inspektor AČR", correctSelect: "generálmajor", correctText: "Lafek" },
+            { image: 'foto (12).JPEG', text: "Vrchní praporčík AČR", correctSelect: "štábní praporčík", correctText: "Gural" },
+            { image: 'foto (13).JPEG', text: "Prezident České republiky", correctSelect: "bez hodnosti", correctText: "Pavel" },
+            { image: 'foto (14).JPEG', text: "Předseda Vlády ČR", correctSelect: "bez hodnosti", correctText: "Fiala" },
+            { image: 'foto (15).JPEG', text: "Předseda Senátu Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Vystřelil" },
+            { image: 'foto (16).JPEG', text: "Předsedkyně Poslanecké sněmovny Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Pekarová Adamová" }
+        ];
+
+        // Shuffle questions randomly (Fisher–Yates shuffle)
+        questions = questions
+            .map(q => ({ q, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ q }) => q);
+
+        let userAnswers = Array(questions.length).fill().map(() => ({ select: "", text: "" }));
+        let currentQuestion = 0;
+
+        function loadQuestion(index) {
+            const q = questions[index];
+            document.getElementById("question-number").textContent = `Otázka ${index + 1} z ${questions.length}`;
+            document.getElementById("question-text").textContent = q.text;
+            document.getElementById("question-image").src = q.image;
+
+            const dropdown = document.getElementById("dropdown");
+            dropdown.innerHTML = '<option value="">hodnost</option>';
+            dropdownOptions.forEach(opt => {
+                const option = document.createElement("option");
+                option.value = opt;
+                option.textContent = opt;
+                dropdown.appendChild(option);
+            });
+
+            // Restore user's previous answer
+            dropdown.value = userAnswers[index].select || "";
+            document.getElementById("text-answer").value = userAnswers[index].text || "";
+
+            // Update navigation buttons
+            document.getElementById("prev-btn").disabled = index === 0;
+            document.getElementById("next-btn").textContent =
+                index === questions.length - 1 ? "Potvrdit" : "Další";
+        }
+
+        function saveAnswer() {
+            const dropdownValue = document.getElementById("dropdown").value;
+            const textValue = document.getElementById("text-answer").value.trim();
+            userAnswers[currentQuestion] = { select: dropdownValue, text: textValue };
+        }
+
+        function nextQuestion() {
+            saveAnswer();
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion(currentQuestion);
+            } else {
+                checkAnswers();
+            }
+        }
+
+        function prevQuestion() {
+            saveAnswer();
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion(currentQuestion);
+            }
+        }
+
+        function checkAnswers() {
+            saveAnswer();
+            let score = 0;
+            let resultHTML = `<h2>Test dokončen!</h2><p>Výsledky:</p>`;
+
+            questions.forEach((q, i) => {
+                const user = userAnswers[i];
+                const isCorrect =
+                    user.select === q.correctSelect &&
+                    user.text.toLowerCase() === q.correctText.toLowerCase();
+
+                if (isCorrect) score++;
+
+                resultHTML += `
+      <div class="answer-summary">
+        <h3>Otázka ${i + 1}</h3>
+        <img class="small-img" src="${q.image}" alt="Otázka ${i + 1}">
+        <p><b>Vaše odpověď:</b> ${user.select || "—"}, ${user.text || "—"}</p>
+        <p><b>Správná odpověď:</b> ${q.correctSelect}, ${q.correctText}</p>
+        <p class="${isCorrect ? 'správně' : 'špatně'}">
+          ${isCorrect ? "✔ Správně" : "✘ Špatně"}
+        </p>
+      </div>
+    `;
+            });
+
+            resultHTML += `<h3>Počet bodů: ${score} / ${questions.length}</h3>
+                 <button onclick="location.reload()">Restart</button>`;
+
+            document.getElementById("quiz-container").innerHTML = resultHTML;
+        }
+
+        // Initialize quiz
+        loadQuestion(currentQuestion);
+    </script>
+
+</body>
+
+</html>
