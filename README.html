@@ -102,23 +102,23 @@
     <script>
         const dropdownOptions = ["armádní generál", "generálporučík", "generálmajor", "brigádní generál", "plukovník gšt.", "podplukovník", "štábní praporčík", "bez hodnosti"];
 
-        let questions = [
-            { image: 'foto (1).JPEG', text: "Velitel VeV-VA", correctSelect: "brigádní generál", correctText: "Rebilas" },
-            { image: 'foto (2).JPEG', text: "Zástupce velitele VeV-VA", correctSelect: "plukovník gšt.", correctText: "Havel" },
-            { image: 'foto (3).JPEG', text: "Náčelník Štábu VeV-VA", correctSelect: "plukovník gšt.", correctText: "Němčanský" },
-            { image: 'foto (4).JPEG', text: "ZNŠ Ops VeV-VA", correctSelect: "podplukovník", correctText: "Barák" },
-            { image: 'foto (5).JPEG', text: "ZNŠ Sup VeV-VA", correctSelect: "podplukovník", correctText: "Zajíček" },
-            { image: 'foto (6).JPEG', text: "Vrchní praporčík VeV-VA", correctSelect: "štábní praporčík", correctText: "Vajdečka" },
-            { image: 'foto (7).JPEG', text: "Ministryně obrany ČR", correctSelect: "bez hodnosti", correctText: "Černochová" },
-            { image: 'foto (8).JPEG', text: "NGŠ", correctSelect: "armádní generál", correctText: "Řehka" },
-            { image: 'foto (9).JPEG', text: "1. ZNGŠ", correctSelect: "generálporučík", correctText: "Hlaváč" },
-            { image: 'foto (10).JPEG', text: "ZNGŠ-Náčelník Štábu", correctSelect: "generálmajor", correctText: "Lipka" },
-            { image: 'foto (11).JPEG', text: "ZNGŠ-Inspektor AČR", correctSelect: "generálmajor", correctText: "Lafek" },
-            { image: 'foto (12).JPEG', text: "Vrchní praporčík AČR", correctSelect: "štábní praporčík", correctText: "Gural" },
-            { image: 'foto (13).JPEG', text: "Prezident České republiky", correctSelect: "bez hodnosti", correctText: "Pavel" },
-            { image: 'foto (14).JPEG', text: "Předseda Vlády ČR", correctSelect: "bez hodnosti", correctText: "Fiala" },
-            { image: 'foto (15).JPEG', text: "Předseda Senátu Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Vystřelil" },
-            { image: 'foto (16).JPEG', text: "Předsedkyně Poslanecké sněmovny Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Pekarová Adamová" }
+        let questions = [{ image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(1).JPEG', text: "Velitel VeV-VA", correctSelect: "brigádní generál", correctText: "Rebilas" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(2).JPEG', text: "Zástupce velitele VeV-VA", correctSelect: "plukovník gšt.", correctText: "Havel" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(3).JPEG', text: "Náčelník Štábu VeV-VA", correctSelect: "plukovník gšt.", correctText: "Němčanský" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(4).JPEG', text: "ZNŠ Ops VeV-VA", correctSelect: "podplukovník", correctText: "Barák" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(5).JPEG', text: "ZNŠ Sup VeV-VA", correctSelect: "podplukovník", correctText: "Zajíček" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(6).JPEG', text: "Vrchní praporčík VeV-VA", correctSelect: "štábní praporčík", correctText: "Vajdečka" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(7).JPEG', text: "Ministryně obrany ČR", correctSelect: "bez hodnosti", correctText: "Černochová" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(8).JPEG', text: "NGŠ", correctSelect: "armádní generál", correctText: "Řehka" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(9).JPEG', text: "1. ZNGŠ", correctSelect: "generálporučík", correctText: "Hlaváč" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(10).JPEG', text: "ZNGŠ-Náčelník Štábu", correctSelect: "generálmajor", correctText: "Lipka" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(11).JPEG', text: "ZNGŠ-Inspektor AČR", correctSelect: "generálmajor", correctText: "Lafek" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(12).JPEG', text: "Vrchní praporčík AČR", correctSelect: "štábní praporčík", correctText: "Gural" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(13).JPEG', text: "Prezident České republiky", correctSelect: "bez hodnosti", correctText: "Pavel" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(14).JPEG', text: "Předseda Vlády ČR", correctSelect: "bez hodnosti", correctText: "Fiala" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(15).JPEG', text: "Předseda Senátu Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Vystřelil" },
+            { image: 'https://raw.githubusercontent.com/cheekytux/cheekytux.github.io/refs/heads/main/foto%20(16).JPEG', text: "Předsedkyně Poslanecké sněmovny Parlamentu ČR", correctSelect: "bez hodnosti", correctText: "Pekarová Adamová" }
+        ];
         ];
 
         // Shuffle questions randomly (Fisher–Yates shuffle)
